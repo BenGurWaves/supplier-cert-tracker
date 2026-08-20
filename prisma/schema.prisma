@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Manufacturer {
+  id                 String             @id @default(uuid())
+  name               String
+  email              String             @unique
+  passwordHash       String
+  companyName        String
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  suppliers          Supplier[]
+  documentTypes      DocumentType[]
+
+  @@map("manufacturers")
+}
+
+model Supplier {
+  id                 String             @id @default(uuid())
+  manufacturerId     String
+  name               String
+  contactEmail       String
+  contactPhone       String?
+  taxId              String?
+  status             String             @default("ACTIVE")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  manufacturer       Manufacturer       @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
+  documents          SupplierDocument[]
+
+  @@map("suppliers")
+}
+
+model DocumentType {
+  id                 String             @id @default(uuid())
+  manufacturerId     String
+  name               String
+  code               String
+  description        String?
+  isRequired         Boolean            @default(true)
+  validityPeriodDays Int?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  manufacturer       Manufacturer       @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
+  documents          SupplierDocument[]
+
+  @@unique([manufacturerId, code])
+  @@map("document_types")
+}
+
+enum DocumentStatus {
+  VALID
+  EXPIRING_SOON
+  EXPIRED
+  PENDING_REVIEW
+  REJECTED
+}
+
+model SupplierDocument {
+  id                 String             @id @default(uuid())
+  supplierId         String
+  documentTypeId     String
+  documentNumber     String?
+  fileUrl            String?
+  issueDate          DateTime
+  expirationDate     DateTime
+  status             DocumentStatus     @default(VALID)
+  notes              String?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  supplier           Supplier           @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  documentType       DocumentType       @relation(fields: [documentTypeId], references: [id], onDelete: Cascade)
+
+  @@map("supplier_documents")
+}
