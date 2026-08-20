@@ -1,0 +1,18 @@
+{
+  "/(auth)/login/page": "/login",
+  "/(auth)/signup/page": "/signup",
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/cron/reminders/route": "/api/cron/reminders",
+  "/api/export/compliance-csv/route": "/api/export/compliance-csv",
+  "/dashboard/page": "/dashboard",
+  "/document-types/page": "/document-types",
+  "/favicon.ico/route": "/favicon.ico",
+  "/marketing/page": "/marketing",
+  "/page": "/",
+  "/sitemap.xml/route": "/sitemap.xml",
+  "/solutions/insurance-tracking/page": "/solutions/insurance-tracking",
+  "/solutions/iso-compliance/page": "/solutions/iso-compliance",
+  "/suppliers/[id]/documents/page": "/suppliers/[id]/documents",
+  "/suppliers/page": "/suppliers"
+}

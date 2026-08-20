@@ -1,0 +1,7 @@
+name = "supplier-cert-tracker"
+pages_build_output_dir = ".open-next/assets"
+compatibility_date = "2026-08-20"
+compatibility_flags = ["nodejs_compat"]
+
+[site]
+bucket = ".open-next/assets"
